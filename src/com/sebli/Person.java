@@ -5,10 +5,14 @@ import java.util.List;
 
 public class Person {
     private String name;
+    private String gender;
     private List<Person> dates;
 
-    public Person(String name) {
+
+
+    public Person(String name, String gender) {
         this.name = name;
+        this.gender = gender;
         dates=new ArrayList<>();
     }
 
@@ -30,5 +34,13 @@ public class Person {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getGender() {
+        return gender;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
     }
 }
