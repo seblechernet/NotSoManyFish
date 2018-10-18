@@ -10,14 +10,17 @@ public class Person {
 
 
 
+
     public Person(String name, String gender) {
         this.name = name;
         this.gender = gender;
         dates=new ArrayList<>();
+
     }
 
     public Person() {
         dates=new ArrayList<>();
+
     }
 
     public List<Person> getDates() {
@@ -43,4 +46,6 @@ public class Person {
     public void setGender(String gender) {
         this.gender = gender;
     }
+
+
 }

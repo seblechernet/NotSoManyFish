@@ -1,6 +1,8 @@
 package com.sebli;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Random;
 
 public class Main {
@@ -8,17 +10,19 @@ public class Main {
     public static void main(String[] args) {
         ArrayList<Person> people = new ArrayList<>();
         ArrayList<String> scenarios = new ArrayList<>();
-        Person person1 = new Person("Sarah","F");
+        HashMap<Person, Person> breakUps = new HashMap<>();
+
+        Person person1 = new Person("Sarah", "F");
         people.add(person1);
-        Person person2 = new Person("Michael","M");
+        Person person2 = new Person("Michael", "M");
         people.add(person2);
-        Person person3 = new Person("Lisa","F");
+        Person person3 = new Person("Lisa", "F");
         people.add(person3);
-        Person person4 = new Person("Simon","M");
+        Person person4 = new Person("Simon", "M");
         people.add(person4);
-        Person person5 = new Person("Natan","M");
+        Person person5 = new Person("Natan", "M");
         people.add(person5);
-        Person person6 = new Person("Ednah","F");
+        Person person6 = new Person("Ednah", "F");
         people.add(person6);
 
         scenarios.add(" tipped over a glass during a date with ");
@@ -32,6 +36,9 @@ public class Main {
 
         Random rd = new Random();
         int iteration = 1;
+        boolean[] breakUp = new boolean[2];
+        breakUp[0] = false;
+        breakUp[1] = true;
         do {
             int index1 = rd.nextInt(6);
             int index2 = rd.nextInt(6);
@@ -49,28 +56,44 @@ public class Main {
             int random3 = rd.nextInt(scenarios.size());
             String thirdScenario = scenarios.get(random3);
             scenarios.remove(scenarios.get(random3));
+
             scenarios.add(firstScenario);
             scenarios.add(secondScenario);
             scenarios.add(thirdScenario);
-
-            if (firstPerson == secondPerson && people.get(index1).getGender().equals("F")) {
-                System.out.printf("\n\n%d. %s was free on Saturday.No dates for her \n",iteration,people.get(index1).getName());
-            if (firstPerson == secondPerson && people.get(index1).getGender().equals("M")) {
-                System.out.printf("\n\n%d. %s was free on Saturday.No dates for him \n", iteration,people.get(index1).getName());
+            int randBoleanIndex = rd.nextInt(2);
+            if(findBreakUps(firstPerson,secondPerson,breakUps)==true){
+                System.out.println("\n" + iteration + "*!*!*" +firstPerson.getName()+ " and " + secondPerson.getName() + " can not go out on a date ");
             }
-            } else {
-                firstPerson.getDates().add(secondPerson);
-                secondPerson.getDates().add(firstPerson);
-                System.out.printf("\n%d. %s asked %s and %s accepted", iteration,firstPerson.getName(), secondPerson.getName(), secondPerson.getName());
-                System.out.printf("\n  -%s%s%s",firstPerson.getName(),firstScenario,secondPerson.getName());
+            if (findBreakUps(firstPerson, secondPerson, breakUps)==false) {
 
-                System.out.printf("\n  -%s%s%s",firstPerson.getName(),secondScenario,secondPerson.getName());
+                if (firstPerson == secondPerson && people.get(index1).getGender().equals("F")) {
+                    System.out.printf("\n\n%d. %s was free on Saturday.No dates for her \n", iteration, people.get(index1).getName());
+                } else if (firstPerson == secondPerson && people.get(index1).getGender().equals("M")) {
+                    System.out.printf("\n\n%d. %s was free on Saturday.No dates for him \n", iteration, people.get(index1).getName());
+                } else {
+                    firstPerson.getDates().add(secondPerson);
+                    secondPerson.getDates().add(firstPerson);
 
-                System.out.printf("\n  -%s%s%s",firstPerson.getName(),thirdScenario,secondPerson.getName());
+                    System.out.printf("\n%d. %s asked %s and %s accepted", iteration, firstPerson.getName(), secondPerson.getName(), secondPerson.getName());
+                    System.out.printf("\n  -%s%s%s", firstPerson.getName(), firstScenario, secondPerson.getName());
+
+                    System.out.printf("\n  -%s%s%s", firstPerson.getName(), secondScenario, secondPerson.getName());
+
+                    System.out.printf("\n  -%s%s%s", firstPerson.getName(), thirdScenario, secondPerson.getName());
+                    boolean randBolean = breakUp[randBoleanIndex];
+                    if (randBolean == true) {
+                        System.out.println("\nThey Broke UP\n");
+                        breakUps.put(firstPerson, secondPerson);
+
+                    }
 
 
+                }
             }
+
             iteration++;
+
+
         } while (iteration <= 10);
 
         System.out.println("\n***--- Summary ---***");
@@ -80,11 +103,28 @@ public class Main {
                     eachPerson.getDates().remove(eachDate);
                 }
             }
-            if(eachPerson.getDates().size()==0){
-                System.out.printf("No dates for %s",eachPerson.getName());
-            }
-            else
-            System.out.println(eachPerson.getName() + " Got " + eachPerson.getDates().size() + " Dates ");
+            if (eachPerson.getDates().size() == 0) {
+                System.out.printf("No dates for %s\n", eachPerson.getName());
+            } else
+                System.out.println(eachPerson.getName() + " Got " + eachPerson.getDates().size() + " Dates ");
         }
     }
+
+    public static boolean findBreakUps(Person person1, Person person2, HashMap<Person, Person> breakUps) {
+        boolean noDating = false;
+        for (Map.Entry<Person, Person> entry : breakUps.entrySet()) {
+            if ((entry.getKey() == person1) && (entry.getValue() == person2)) {
+                noDating = true;
+
+            }
+            if ((entry.getKey() == person2) && (entry.getValue() == person1)) {
+                noDating = true;
+
+            }
+
+        }
+        return noDating;
+    }
+
 }
+
