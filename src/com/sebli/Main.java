@@ -61,10 +61,11 @@ public class Main {
             scenarios.add(secondScenario);
             scenarios.add(thirdScenario);
             int randBoleanIndex = rd.nextInt(2);
-            if(findBreakUps(firstPerson,secondPerson,breakUps)==true){
-                System.out.println("\n" + iteration + "*!*!*" +firstPerson.getName()+ " and " + secondPerson.getName() + " can not go out on a date ");
+
+            if (findBreakUps(firstPerson, secondPerson, breakUps) == true) {
+                System.out.println("\n" + iteration + "*!*!*" + firstPerson.getName() + " and " + secondPerson.getName() + " can not go out on a date ");
             }
-            if (findBreakUps(firstPerson, secondPerson, breakUps)==false) {
+            if (findBreakUps(firstPerson, secondPerson, breakUps) == false) {
 
                 if (firstPerson == secondPerson && people.get(index1).getGender().equals("F")) {
                     System.out.printf("\n\n%d. %s was free on Saturday.No dates for her \n", iteration, people.get(index1).getName());
