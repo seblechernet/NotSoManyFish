@@ -33,18 +33,20 @@ public class Main {
         Random rd = new Random();
         int iteration = 1;
         do {
-            int index1 = rd.nextInt(6);
-            int index2 = rd.nextInt(6);
+            int index1 = rd.nextInt(5);
+            int index2 = rd.nextInt(5);
             Person firstPerson = people.get(index1);
             Person secondPerson = people.get(index2);
 
-            int random1 = rd.nextInt(scenarios.size());
+            int random1 = rd.nextInt(scenarios.size()-1);
             String firstScenario = scenarios.get(random1);
             scenarios.remove(scenarios.get(random1));
-            int random2 = rd.nextInt(scenarios.size());
+
+            int random2 = rd.nextInt(scenarios.size()-1);
             String secondScenario = scenarios.get(random2);
             scenarios.remove(scenarios.get(random2));
-            int random3 = rd.nextInt(scenarios.size());
+
+            int random3 = rd.nextInt(scenarios.size()-1);
             String thirdScenario = scenarios.get(random3);
             scenarios.remove(scenarios.get(random3));
 
@@ -54,12 +56,12 @@ public class Main {
             } else {
                 firstPerson.getDates().add(secondPerson);
                 secondPerson.getDates().add(firstPerson);
-                System.out.printf("%s asked %s and %s accepted", firstPerson.getName(), secondPerson.getName(), secondPerson.getName());
-                System.out.printf("\n%s%s%S",firstPerson.getName(),firstScenario,secondPerson.getName());
+                System.out.printf("\n%s asked %s and %s accepted", firstPerson.getName(), secondPerson.getName(), secondPerson.getName());
+                System.out.printf("\n  -%s%s%S",firstPerson.getName(),firstScenario,secondPerson.getName());
                 scenarios.add(firstScenario);
-                System.out.printf("\n%s%s%S",firstPerson.getName(),secondScenario,secondPerson.getName());
+                System.out.printf("\n  -%s%s%S",firstPerson.getName(),secondScenario,secondPerson.getName());
                 scenarios.add(secondScenario);
-                System.out.printf("\n%s%s%S",firstPerson.getName(),thirdScenario,secondPerson.getName());
+                System.out.printf("\n  -%s%s%S",firstPerson.getName(),thirdScenario,secondPerson.getName());
                 scenarios.add(thirdScenario);
 
             }
@@ -73,6 +75,7 @@ public class Main {
                     eachPerson.getDates().remove(eachDate);
                 }
             }
+
             System.out.println(eachPerson.getName() + " Got " + eachPerson.getDates().size() + " Dates ");
         }
     }
